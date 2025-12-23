@@ -1,0 +1,79 @@
+/* General Styles */
+body {
+    margin: 0;
+    font-family: 'Georgia', serif; /* Using a serif font to match "Savoria" */
+    background-color: #f9f7f5;
+}
+
+/* Header Styles */
+.main-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 40px;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.logo-section {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.logo-icon {
+    background-color: #f7941d; /* Orange brand color */
+    padding: 12px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+}
+
+.brand-text h1 {
+    margin: 0;
+    font-size: 1.4rem;
+    color: #333;
+}
+
+.brand-text p {
+    margin: 0;
+    font-size: 0.85rem;
+    color: #888;
+}
+
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+.admin-link {
+    padding: 8px 10px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #444;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: background-color 0.8s;
+}
+
+.admin-link:hover{
+    background-color: rgb(255, 166, 0);
+    color: white;
+}
+
+.cart-btn {
+    background-color: #f7941d;
+    border: none;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+}

@@ -1,0 +1,19 @@
+
+
+/* Footer Styles */
+.main-footer {
+    text-align: center;
+    padding: 40px 20px;
+    margin-top: 50px;
+    border-top: 1px solid #eee;
+    color: #666;
+}
+
+.main-footer h3 {
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.main-footer p {
+    font-size: 0.85rem;
+}

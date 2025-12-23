@@ -6,7 +6,6 @@ def menu_list(request):
     categories = Category.objects.all()
 
     menu_data = []
-
     for category in categories:
         items = MenuItem.objects.filter(category=category,available=True)
 

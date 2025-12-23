@@ -1,0 +1,45 @@
+{% extends "main/home.html" %}
+{% load static %}
+
+{% block title %} <title>Restaurant Menu</title> {% endblock title %}
+
+{% block style %}
+    <link rel="stylesheet" href="{% static 'menu/menu.css' %}">
+{% endblock style %}
+
+{% block content %}
+    {% if menu_data %}
+        <h1 class="menu-title">🍽️ Our Menu</h1>
+        
+        {% for data in menu_data %}
+        <div class="category-section">
+            <h2 class="category-name">{{ data.category.name }}</h2>
+            
+            <div class="menu-grid">
+                {% for item in data.items %}
+                <div class="food-card">
+                    <div class="card-image">
+                        <img src="{{ item.img_url }}" alt="{{ item.name }}">
+                    </div>
+
+                    <div class="card-content">
+                        <div class="card-header">
+                            <h3 class="item-name">{{ item.name }}</h3>
+                            <span class="price">₹{{ item.price }}</span>
+                        </div>
+                        <p class="description">{{ item.description }}</p>
+                        <button class="add-to-cart-btn">
+                            <span class="plus">+</span> Add to Cart
+                        </button>
+                    </div>
+                </div>
+                {% empty %}
+                <p>No items available</p>
+                {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <p>Menu Not Found</p>
+    {% endif %}
+{% endblock content %}

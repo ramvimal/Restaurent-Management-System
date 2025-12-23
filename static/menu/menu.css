@@ -1,0 +1,101 @@
+/* Container for the whole menu */
+.menu-title {
+    text-align: center;
+    margin: 40px 0;
+    font-family: 'Georgia', serif;
+}
+
+.category-name {
+    padding-left: 20px;
+    margin: 30px 0 15px 0;
+    font-size: 1.8rem;
+    border-left: 5px solid #f7941d;
+}
+
+/* Grid Layout */
+.menu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 25px;
+    padding: 20px;
+}
+
+/* Card Styling */
+.food-card {
+    background: #fff;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+.food-card:hover {
+    transform: translateY(-5px);
+}
+
+.card-image img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover; /* Keeps image aspect ratio clean */
+}
+
+.card-content {
+    padding: 15px;
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 10px;
+}
+
+.item-name {
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #333;
+}
+
+.price {
+    background: #fff5eb;
+    color: #f7941d;
+    font-weight: bold;
+    padding: 2px 8px;
+    border-radius: 5px;
+    font-size: 0.9rem;
+}
+
+.description {
+    font-size: 0.9rem;
+    color: #777;
+    margin-bottom: 20px;
+    line-height: 1.4;
+    height: 40px; /* Limits description height for alignment */
+    overflow: hidden;
+}
+
+/* Button Styling */
+.add-to-cart-btn {
+    width: 100%;
+    background-color: #f7941d;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    transition: background 0.2s;
+}
+
+.add-to-cart-btn:hover {
+    background-color: #e68519;
+}
+
+.plus {
+    font-size: 1.2rem;
+}
