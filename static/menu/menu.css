@@ -450,3 +450,77 @@
 .cart-sidebar .trash:hover {
     color: #ff7a00;
 }
+
+/* CHECKOUT OVERLAY */
+.checkout-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 20000;
+}
+
+.checkout-overlay.show {
+    display: flex;
+}
+
+/* MAIN BOX */
+.checkout-box {
+    background: #fff;
+    width: 850px;
+    max-width: 95%;
+    border-radius: 16px;
+    display: flex;
+    position: relative;
+    overflow: hidden;
+}
+
+/* LEFT */
+.checkout-left {
+    flex: 1;
+    padding: 25px;
+}
+
+.checkout-left input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+.confirm-btn {
+    width: 100%;
+    background: #ff7a00;
+    color: #fff;
+    padding: 14px;
+    border: none;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* RIGHT */
+.checkout-right {
+    flex: 1;
+    padding: 25px;
+    background: #faf7f4;
+}
+
+#checkout-items {
+    max-height: 250px;
+    overflow-y: auto;
+}
+
+/* CLOSE */
+.checkout-close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 22px;
+    cursor: pointer;
+}

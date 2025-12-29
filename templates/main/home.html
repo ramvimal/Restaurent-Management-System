@@ -6,12 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% block title %}{% endblock title %}
     {% block style %}{% endblock style %}
-    <style>@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');</style>
+    <style>
+        *{
+            font-family:arial;
+        }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');</style>
 </head>
 <body>
     {% include "main/navbar.html" %}
     {% block content %}
     {% endblock content %}
     {% include "main/footer.html" %}
+    {% block script %}
+    <script></script>
+    {% endblock script %}
 </body>
 </html>

@@ -27,9 +27,11 @@
                 <span class="settings-icon">⚙</span>
                 <span>Admin</span>
             </div>
-            <button class="cart-btn" id="cartBtn">
-                <span class="cart-icon">🛒</span>
-            </button>
+            {% if request.path != '/checkout/' %}
+                <button class="cart-btn" id="cartBtn">
+                    <span class="cart-icon">🛒</span>
+                </button>
+            {% endif %}
         </div>
     </header>
 </body>

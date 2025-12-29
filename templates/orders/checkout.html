@@ -1,0 +1,140 @@
+{% extends "main/home.html" %}
+{% load static %}
+{% block title %} <title>Checkout</title> {% endblock title %}
+
+
+{% block style %}
+    <link rel="stylesheet" href="{% static 'menu/checkout.css' %}">
+{% endblock style %}
+
+{% block content %}
+<div class="checkout-page">
+
+    <!-- Back -->
+    <a href="/" class="back-link">← Back to Menu</a>
+    <div class="checkout-grid">
+
+        <!-- LEFT: CUSTOMER DETAILS -->
+        <div class="checkout-card">
+            <h2>Delivery Details</h2>
+
+            <label>Full Name *</label>
+            <input type="text" id="customerName" placeholder="John Doe">
+
+            <label>Email (Optional)</label>
+            <input type="email" placeholder="john@example.com">
+
+            <label>Phone Number *</label>
+            <input type="text" id="customerPhone" placeholder="9876543210">
+
+            <label>Delivery Address *</label>
+            <textarea placeholder="House no, Street, City"></textarea>
+
+            <label>Special Instructions (Optional)</label>
+            <textarea placeholder="Any instructions for delivery"></textarea>
+
+            <button class="confirm-btn" onclick="confirmCheckout()">
+                Confirm Order
+            </button>
+        </div>
+
+        <!-- RIGHT: ORDER SUMMARY -->
+        <div class="checkout-summary">
+            <h2>Order Summary</h2>
+
+            <div id="checkout-items"></div>
+
+            <div class="summary-row">
+                <span>Subtotal</span>
+                <span id="checkout-subtotal">₹0</span>
+            </div>
+
+            <div class="summary-row">
+                <span>Delivery</span>
+                <span class="free">Free</span>
+            </div>
+
+            <div class="summary-total">
+                <span>Total</span>
+                <span id="checkout-total">₹0</span>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock content %}
+{% block script %}
+<script>
+    function renderCheckoutSummary() {
+        fetch("/get-cart/")
+            .then(res => res.json())
+            .then(data => {
+                const container = document.getElementById("checkout-items");
+                const subtotal = document.getElementById("checkout-subtotal");
+                const total = document.getElementById("checkout-total");
+
+                container.innerHTML = "";
+                let sum = 0;
+
+                for (let id in data.cart) {
+                    const item = data.cart[id];
+                    const itemTotal = item.price * item.quantity;
+                    sum += itemTotal;
+
+                    container.innerHTML += `
+                        <div class="summary-item">
+                            <img src="/${item.image}" style="width:50px;height:50px;border-radius:8px;">
+                            <div style="flex:1">
+                                <strong>${item.name}</strong><br>
+                                Qty: ${item.quantity} × ₹${item.price}
+                            </div>
+                            <strong>₹${itemTotal}</strong>
+                        </div>
+                    `;
+                }
+
+                subtotal.innerText = "₹" + sum;
+                total.innerText = "₹" + sum;
+            });
+    }
+    
+    function getCSRFToken() {
+        let cookieValue = null;
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.startsWith('csrftoken=')) {
+                cookieValue = cookie.substring('csrftoken='.length);
+                break;
+            }
+        }
+        return cookieValue;
+    }
+
+    
+    function confirmCheckout() {
+        const name = document.getElementById("customerName").value || "Guest";
+        const phone = document.getElementById("customerPhone").value || "";
+
+        fetch("/checkout/confirm/", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRFToken": getCSRFToken()
+            },
+            body: JSON.stringify({
+                customer_name: name,
+                phone: phone
+            })
+        })
+        .then(res => res.json())
+        .then(data => {
+            window.location.href = `/bill/${data.order_id}/`;
+        });
+    }
+document.addEventListener("DOMContentLoaded", renderCheckoutSummary);
+
+
+</script>
+{% endblock script %}

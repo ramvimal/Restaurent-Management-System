@@ -1,5 +1,12 @@
-from django.http import JsonResponse
+from django.shortcuts import render , redirect
+from .models import Order, OrderItem
 from menu.models import MenuItem
+from django.http import JsonResponse
+import json
+from menu.models import MenuItem
+
+# Create your views here.
+
 
 def add_to_cart(request, item_id):
     item = MenuItem.objects.get(id=item_id)
@@ -77,3 +84,47 @@ def remove_from_cart(request, item_id):
 
     request.session['cart'] = cart
     return JsonResponse(cart_response(cart))
+
+def order_bill(request, order_id):
+    order = Order.objects.get(id=order_id)
+    return render(request, 'orders/bill.html', {'order': order})
+
+def checkout_page(request):
+    return render(request, 'orders/checkout.html')
+
+
+def checkout_confirm(request):
+    if request.method != "POST":
+        return JsonResponse({"error": "Invalid request"}, status=400)
+
+    cart = request.session.get('cart')
+    if not cart:
+        return JsonResponse({"error": "Cart empty"}, status=400)
+
+    data = json.loads(request.body)
+
+    customer_name = data.get("customer_name", "Guest")
+    phone = data.get("phone", "")
+
+    order = Order.objects.create(
+        customer_name=customer_name,
+        total_amount=0
+    )
+
+    total = 0
+    for item in cart.values():
+        OrderItem.objects.create(
+            order=order,
+            item_name=item['name'],
+            price=item['price'],
+            quantity=item['quantity']
+        )
+        total += item['price'] * item['quantity']
+
+    order.total_amount = total
+    order.save()
+
+    request.session['cart'] = {}
+
+    menu_item = MenuItem.objects.all()
+    return JsonResponse({"order_id": order.id,"menu_item":menu_item})
