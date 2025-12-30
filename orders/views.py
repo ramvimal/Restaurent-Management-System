@@ -4,7 +4,7 @@ from menu.models import MenuItem
 from django.http import JsonResponse
 import json
 from menu.models import MenuItem
-
+from django.views.decorators.csrf import csrf_exempt
 # Create your views here.
 
 
@@ -92,7 +92,7 @@ def order_bill(request, order_id):
 def checkout_page(request):
     return render(request, 'orders/checkout.html')
 
-
+@csrf_exempt
 def checkout_confirm(request):
     if request.method != "POST":
         return JsonResponse({"error": "Invalid request"}, status=400)
@@ -126,5 +126,4 @@ def checkout_confirm(request):
 
     request.session['cart'] = {}
 
-    menu_item = MenuItem.objects.all()
-    return JsonResponse({"order_id": order.id,"menu_item":menu_item})
+    return JsonResponse({"order_id": order.id})

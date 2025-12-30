@@ -335,6 +335,13 @@
     font-weight: bold;
     color:white;
     border-radius: 10px;
+    transition: transform 0.2s;
+}
+
+.checkout-btn:hover{
+    cursor: pointer;
+    transform: translateY(-2px);
+    background-color:#ff8800;
 }
 
 /* CART ITEM */

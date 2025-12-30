@@ -33,7 +33,9 @@ body {
     border-radius: 12px;
     display: flex;
     align-items: center;
+    /* transition: padding 0.2s; */
 }
+
 
 .brand-text h1 {
     margin: 0;
@@ -82,4 +84,8 @@ body {
     justify-content: center;
     align-items: center;
     font-size: 1.2rem;
+}
+
+.cart-btn:hover{
+    
 }
