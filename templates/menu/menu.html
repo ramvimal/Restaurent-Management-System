@@ -92,20 +92,30 @@
                 </div>
                 <button id="closeCart" class="close-btn">&times;</button>
             </div>
+
             
-            <!-- SCROLL AREA -->
-            <div class="cart-scroll">
-                <div id="side-cart"></div>
-            </div>
-            
-            <!-- FOOTER -->
-            <div class="cart-footer">
-                <div class="total-row">
-                    <span>Total</span>
-                    <strong id="cart-total">₹0</strong>
+            {% if request.session.cart %}
+                <!-- SCROLL AREA -->
+                <div class="cart-scroll">
+                    <div id="side-cart"></div>
                 </div>
-                <button class="checkout-btn" onclick="goToCheckout()">Proceed to Checkout</button>
-            </div>
+                <!-- FOOTER -->
+                <div class="cart-footer">
+                    <div class="total-row">
+                        <span>Total</span>
+                        <strong id="cart-total">₹0</strong>
+                    </div>
+                    <button class="checkout-btn" onclick="goToCheckout()">Proceed to Checkout</button>
+                </div>
+            {% else %}
+                <div class="no-cart-container">
+                    <div>
+                        <p>Your cart is empty <br>
+                            Add some delicious items to get started!</p>
+                            <button>Browse Menu</button>
+                    </div>
+                </div>
+            {% endif %}
             
         </div>
         <div id="cartOverlay" class="cart-overlay" onclick="toggleCart()"></div>
@@ -130,13 +140,16 @@
     function toggleCart() {
         cartSidebar.classList.toggle("open");
         cartOverlay.classList.toggle("show");
-        
+
+        document.body.classList.toggle("cart-open");
+
         if (cartSidebar.classList.contains("open")) {
             document.body.style.overflow = "hidden";
         } else {
             document.body.style.overflow = "auto";
         }
     }
+
     
     cartBtn.addEventListener("click", toggleCart);
     closeCart.addEventListener("click", toggleCart);

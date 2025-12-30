@@ -75,8 +75,6 @@ body {
 .cart-btn {
     background-color: #f7941d;
     border: none;
-    width: 45px;
-    height: 45px;
     border-radius: 50%;
     color: white;
     cursor: pointer;
@@ -84,8 +82,16 @@ body {
     justify-content: center;
     align-items: center;
     font-size: 1.2rem;
+    padding: 10px;
+    transition: box-shadow 0.1s;
+}
+.cart-btn:hover{
+    box-shadow: 0px 0px 0px 1px #f7941d;
 }
 
-.cart-btn:hover{
-    
+/* when cart is open */
+body.cart-open header,
+body.cart-open nav {
+    opacity: 0.4;
+    pointer-events: none; /* prevent clicking navbar */
 }
