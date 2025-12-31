@@ -66,7 +66,7 @@ def increase_quantity(request, item_id):
 def decrease_quantity(request, item_id):
     cart = request.session.get('cart', {})
     item_id = str(item_id)
-
+    
     if item_id in cart:
         cart[item_id]['quantity'] -= 1
         if cart[item_id]['quantity'] <= 0:
@@ -90,6 +90,8 @@ def order_bill(request, order_id):
     return render(request, 'orders/bill.html', {'order': order})
 
 def checkout_page(request):
+    if not request.session.get("cart"):
+        return redirect("/")
     return render(request, 'orders/checkout.html')
 
 @csrf_exempt
@@ -126,4 +128,9 @@ def checkout_confirm(request):
 
     request.session['cart'] = {}
 
+    if request.session.get("order_confirmed"):
+        return JsonResponse(
+            {"error": "Order already placed"},
+            status=400
+        )
     return JsonResponse({"order_id": order.id})

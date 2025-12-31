@@ -19,16 +19,16 @@
             <h2>Delivery Details</h2>
             
             <label>Full Name *</label>
-            <input type="text" id="customerName" placeholder="John Doe" require>
+            <input type="text" id="customerName" placeholder="John Doe" required>
 
             <label>Email (Optional)</label>
             <input type="email" placeholder="john@example.com">
 
             <label>Phone Number *</label>
-            <input type="text" id="customerPhone" placeholder="9876543210" require>
+            <input type="text" id="customerPhone" placeholder="9876543210" required>
 
             <label>Delivery Address *</label>
-            <textarea placeholder="House no, Street, City"></textarea>
+            <textarea placeholder="House no, Street, City" id="customerAddress" required></textarea>
 
             <label>Special Instructions (Optional)</label>
             <textarea placeholder="Any instructions for delivery"></textarea>
@@ -114,8 +114,30 @@
 
     
     function confirmCheckout() {
-        const name = document.getElementById("customerName").value || "Guest";
-        const phone = document.getElementById("customerPhone").value || "";
+        const name = document.getElementById("customerName").value.trim();
+        const phone = document.getElementById("customerPhone").value.trim();
+        const address = document.getElementById("customerAddress").value.trim();
+        console.log(address);
+        if (!name) {
+            alert("Please enter your name");
+            return;
+        }
+
+        if (!phone) {
+            alert("Please enter your phone number");
+            return;
+        }
+
+        if (phone.length < 10) {
+            alert("Please enter a valid phone number");
+            return;
+        }
+
+        if (!address) {
+            alert("Please enter delivery address");
+            return;
+        }
+
 
         fetch("/checkout/confirm/", {
             method: "POST",
@@ -125,7 +147,8 @@
             },
             body: JSON.stringify({
                 customer_name: name,
-                phone: phone
+                phone: phone,
+                address: address
             })
         })
         .then(res => res.json())
