@@ -9,6 +9,7 @@ class Order(models.Model):
     total_amount = models.FloatField()
     phone = models.CharField(max_length=15)
     created_at = models.DateTimeField(auto_now_add=True)
+    address = models.TextField(default="no")
     status_choices = [
         ('PENDING', 'Pending'),
         ('PAID', 'Paid'),

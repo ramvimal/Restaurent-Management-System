@@ -1,45 +1,76 @@
 {% extends "main/home.html" %}
-
 {% load static %}
-{% block title %} <title>Payment Page</title> {% endblock title %}
+
+{% block title %}<title>Payment</title>{% endblock %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'orders/payment.css' %}">
+{% endblock style %}
 
 {% block content %}
-<button id="payBtn" onclick="startPayment()" style="margin: 120px auto;">Pay Now</button>
+<div class="payment-box">
 
-<div id="processing" style="display:none;margin-top:20px">
-    <p>Processing payment, please wait...</p>
+    <!-- STEPS -->
+    <div class="steps">
+        <div class="step active" id="step1">1<br><small>Pay</small></div>
+        <div class="step" id="step2">2<br><small>Processing</small></div>
+        <div class="step" id="step3">3<br><small>Done</small></div>
+    </div>
+    <div class="container_order_detail">
+        <div>
+            <strong>Order ID</strong>
+            <span>#{{ order.id }}</span>
+        </div>
+        <div style="border-bottom: none;">
+            <strong>Total Amount</strong>
+            <span>₹{{ order.total_amount }}</span>
+        </div>
+    </div>
+
+    <button id="payBtn" onclick="startPayment()">
+        Pay Now
+    </button>
+    <div id="processing" class="hidden">
+        <p>Connecting to bank...</p>
+        <div class="loader"></div>
+    </div>
+
 </div>
 
+{% endblock %}
+{% block script %}
+
 <script>
+function goToMenu() {
+    window.location.href = "/";
+}
+
+function activateStep(stepNo) {
+    document.querySelectorAll(".step").forEach(s => s.classList.remove("active"));
+    document.getElementById("step" + stepNo).classList.add("active");
+}
+
 function startPayment() {
-    document.getElementById("payBtn").disabled = true;
-    document.getElementById("processing").style.display = "block";
+    activateStep(2);
+    document.getElementById("payBtn").style.display = "none";
+    document.getElementById("processing").classList.remove("hidden");
 
-    // simulate payment delay
     setTimeout(() => {
-        // randomly success or fail
-        const success = Math.random() > 0.3;
+        activateStep(3);
 
-        if (success) {
-            window.location.href = "/payment/success/{{ order.id }}/";
-        } else {
-            window.location.href = "/payment/fail/{{ order.id }}/";
-        }
-    }, 2000); // 2 seconds delay
-}
+        fetch("/payment/success/{{ order.id }}/")
+            .then(res => res.json())
+            .then(() => {
+                // ⏳ wait 2 sec, then go to confirmation page
+                setTimeout(() => {
+                    window.location.href = "/order-confirmed/{{ order.id }}/";
+                }, 2000);
+            });
 
-function paymentSuccess() {
-    fetch(`/payment/success/{{ order.id }}/`)
-        .then(() => {
-            window.location.href = `/bill/{{ order.id }}/`;
-        });
-}
-
-function paymentFailed() {
-    fetch(`/payment/fail/{{ order.id }}/`)
-        .then(() => {
-            alert("Payment failed. Please try again.");
-        });
+    }, 3000);
 }
 </script>
-{% endblock %}
+
+
+
+{% endblock script %}

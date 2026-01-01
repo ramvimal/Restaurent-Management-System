@@ -1,0 +1,157 @@
+.payment-box {
+    max-width: 420px;
+    margin: 80px auto;
+    background: #fff;
+    padding: 30px;
+    text-align: center;
+    border-radius: 12px;
+}
+
+.steps {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}
+
+.step {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    background: #eee;
+    font-weight: bold;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.step.active {
+    background: orange;
+    color: #fff;
+}
+
+/* --- Updated Order ID & Total Box --- */
+.container_order_detail {
+    background: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    width: 80%;
+    margin: 20px auto;
+    overflow: hidden; /* Keeps corners rounded */
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.container_order_detail div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%; /* Changed from 70% for better alignment */
+    padding: 15px 25px;
+    background-color: #fff; /* White background for a cleaner look */
+    color: #333; /* Dark text */
+    border-bottom: 1px solid #f0f0f0;
+    box-sizing: border-box;
+}
+
+/* Specific styling for the labels */
+.container_order_detail div strong {
+    color: #888;
+    text-transform: uppercase;
+    font-size: 12px;
+    letter-spacing: 1px;
+}
+
+/* Specific styling for the values (ID and Amount) */
+.container_order_detail div span {
+    font-size: 18px;
+    font-weight: 700;
+    color: #16bb1e; /* Green only for the numbers */
+}
+
+/* --- Updated Pay Now Button --- */
+#payBtn {
+    width: 80%;
+    margin-top: 20px;
+    padding: 15px;
+    background: linear-gradient(135deg, #ff9800, #f57c00);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 15px rgba(255, 152, 0, 0.3);
+}
+
+#payBtn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 152, 0, 0.4);
+}
+
+.hidden {
+    display: none;
+}
+
+.loader {
+    width: 35px;
+    height: 35px;
+    border: 4px solid #eee;
+    border-top: 4px solid orange;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 15px auto;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.success {
+    color: green;
+}
+
+.success-screen {
+    margin-top: 40px;
+}
+
+.success-icon {
+    width: 90px;
+    height: 90px;
+    margin: 0 auto 20px;
+    border-radius: 50%;
+    background: #e8f5e9;
+    color: #2e7d32;
+    font-size: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+.success-screen h2 {
+    font-size: 28px;
+    margin-bottom: 10px;
+}
+
+.success-screen p {
+    color: #555;
+    line-height: 1.6;
+}
+
+.back-btn {
+    margin-top: 20px;
+    padding: 12px 24px;
+    background: orange;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.redirect-text {
+    margin-top: 15px;
+    font-size: 14px;
+    color: #777;
+}

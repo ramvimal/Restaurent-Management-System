@@ -1,0 +1,77 @@
+{% extends "main/home.html" %}
+{% load static %}
+
+{% block title %}
+<title>Order Confirmed</title>
+{% endblock %}
+
+{% block style %}
+<style>
+.container{
+    min-height:70vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+.right_icon{
+    width:80px;
+    height:80px;
+    border-radius:50%;
+    background:#eaf7ef;
+    margin:0 auto 20px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+.bill_btn{
+    padding: 10px 15px;
+    background-color:#26CCC2;
+    border-radius:10px;
+    color:blue;
+    font-weight:bold;
+    text-decoration:none;
+}
+.buttons{
+    margin-top:30px;
+    display: flex;
+    justify-content: space-around;
+}
+.buttons a{
+
+}
+</style>
+{% endblock style %}
+
+{% block content %}
+<div class="container" >
+    <div style="text-align:center;max-width:500px;">
+        
+        <div class="right_icon" style="">
+            <span style="font-size:36px;color:#16a34a;">✔</span>
+        </div>
+
+        <h1>Order Confirmed!</h1>
+        <p style="margin:15px 0;color:#555;">
+            Thank you for your order. We'll start preparing it right away.<br>
+            You'll receive updates on your order status.
+        </p>
+
+        <div class="buttons">
+            <a href="/bill/{{ order.id }}/" class="bill_btn">
+                View Bill
+            </a>
+            <a href="/" class="bill_btn">
+                Back To Menu
+            </a>
+        </div>
+
+    </div>
+</div>
+<script>
+    // Disable browser back button
+    history.pushState(null, null, location.href);
+    window.onpopstate = function () {
+        history.go(1);
+    };
+</script>
+{% endblock %}

@@ -1,5 +1,3 @@
-
-
 const cartSidebar = document.getElementById("cartSidebar");
 const cartOverlay = document.getElementById("cartOverlay");
 const closeCart = document.getElementById("closeCart");
@@ -154,3 +152,4 @@ document.addEventListener("DOMContentLoaded", () => {
     .then(res => res.json())
     .then(updateSideCart);
 });
+

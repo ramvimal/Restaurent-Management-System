@@ -3,8 +3,8 @@ from .models import Order, OrderItem
 from menu.models import MenuItem
 from django.http import JsonResponse
 import json
-from menu.models import MenuItem
 from django.views.decorators.csrf import csrf_exempt
+from django.shortcuts import get_object_or_404
 # Create your views here.
 
 
@@ -27,6 +27,7 @@ def add_to_cart(request, item_id):
 
 
     request.session['cart'] = cart
+    request.session.modified = True
 
     # calculate totals
     total_items = sum(i['quantity'] for i in cart.values())
@@ -85,43 +86,47 @@ def remove_from_cart(request, item_id):
     request.session['cart'] = cart
     return JsonResponse(cart_response(cart))
 
-def order_bill(request, order_id):
-    order = Order.objects.get(id=order_id)
-    return render(request, 'orders/bill.html', {'order': order})
+def clear_cart(request):
+    request.session['cart'] = {}
+    request.session.modified = True
+    return JsonResponse({"status": "cart cleared"})
+
+# -------------------- CHECKOUT --------------------
 
 def checkout_page(request):
     if not request.session.get("cart"):
         return redirect("/")
     return render(request, 'orders/checkout.html')
 
+
 @csrf_exempt
 def checkout_confirm(request):
+    # block checkout if a paid order exists
+    active_order_id = request.session.get("active_order_id")
+    if active_order_id:
+        order = Order.objects.filter(id=active_order_id).first()
+        if order and order.status == "PAID":
+            request.session.pop("active_order_id", None)
+        elif order and order.status == "PENDING":
+            return JsonResponse({"order_id": order.id})
+
     if request.method != "POST":
         return JsonResponse({"error": "Invalid request"}, status=400)
 
-    # 🔐 Prevent duplicate checkout
-    if request.session.get("order_confirmed") and request.session.get("current_order_id"):
-        return JsonResponse(
-            {
-                "order_id": request.session["current_order_id"]
-            }
-        )
-
     cart = request.session.get("cart")
     if not cart:
-        return JsonResponse({"error": "Cart expired"}, status=400)
+        return JsonResponse({"error": "Cart empty"}, status=400)
+
+
 
     data = json.loads(request.body)
 
-    customer_name = data.get("customer_name", "Guest")
-    phone = data.get("phone", "")
-
-    # ✅ Create order (PENDING for payment flow)
     order = Order.objects.create(
-        customer_name=customer_name,
-        phone=phone,
+        customer_name=data.get("customer_name"),
+        phone=data.get("phone"),
+        address=data.get("address"),
         total_amount=0,
-        status="PENDING"   # important
+        status="PENDING"
     )
 
     total = 0
@@ -137,13 +142,18 @@ def checkout_confirm(request):
     order.total_amount = total
     order.save()
 
-    # ✅ Mark checkout as completed (VERY IMPORTANT)
-    request.session["order_confirmed"] = True
-    request.session["current_order_id"] = order.id
+    # ✅ store ONLY active order id
+    request.session["active_order_id"] = order.id
     request.session.modified = True
 
-    # ❌ DO NOT clear cart here (clear after payment success)
     return JsonResponse({"order_id": order.id})
+
+# -------------------- PAYMENT --------------------
+
+
+
+
+
 
 def payment_page(request, order_id):
     order = Order.objects.get(id=order_id)
@@ -153,24 +163,48 @@ def payment_page(request, order_id):
 
     return render(request, "orders/payment.html", {"order": order})
 
+
+
+@csrf_exempt
 def payment_success(request, order_id):
-    order = Order.objects.get(id=order_id)
+    order = get_object_or_404(Order, id=order_id)
 
     if order.status == "PAID":
-        return redirect("order_bill", order_id=order.id)
+        return JsonResponse({"message": "Already paid"})
 
     order.status = "PAID"
     order.save()
 
-    # clear cart only after payment
+    request.session.pop("active_order_id", None)
     request.session["cart"] = {}
-    request.session.pop("current_order_id", None)
+    request.session.modified = True
 
-    return redirect("order_bill", order_id=order.id)
+    return JsonResponse({"success": True})
+
+
+
 
 def payment_fail(request, order_id):
-    order = Order.objects.get(id=order_id)
+    order = get_object_or_404(Order, id=order_id)
     order.status = "FAILED"
     order.save()
 
     return render(request, "orders/payment_failed.html", {"order": order})
+
+# -------------------- ORDER CONFIRMATION & BILL --------------------
+
+def order_confirmed(request, order_id):
+    order = get_object_or_404(Order, id=order_id)
+
+    if order.status != "PAID":
+        return redirect(f"/payment/{order.id}/")
+
+    return render(request, "orders/order_confirmed.html", {"order": order})
+
+def bill_view(request, order_id):
+    order = get_object_or_404(Order, id=order_id)
+
+    if order.status != "PAID":
+        return redirect(f"/payment/{order.id}/")
+
+    return render(request, "orders/bill.html", {"order": order})
