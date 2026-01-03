@@ -27,7 +27,7 @@
                 <span class="settings-icon">⚙</span>
                 <a href="/admin">Admin</a>
             </div>
-            {% if request.path != '/checkout/' %}
+            {% if request.path != '/checkout/' or request.path != '/bill/' %}
                 <button class="cart-btn" id="cartBtn">
                     <span class="cart-icon">🛒</span>
                 </button>

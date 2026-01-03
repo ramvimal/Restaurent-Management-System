@@ -1,13 +1,27 @@
 from django.contrib import admin
 from .models import Order , OrderItem
 
-# Register your models here.
+class OrderItemInline(admin.TabularInline):
+    model = OrderItem
+    extra = 0
+    
+    def has_change_permission(self, request, obj=None):
+        if obj and obj.status == "PAID":
+            return False
+        return True
+    
+    def has_delete_permission(self,request,obj=None):
+        if obj and obj.status == "PAID":
+            return False
+        return True
+    
+    def get_readonly_fields(self,request,obj=None):
+        if obj and obj.status == "PAID":
+            return ("price", "quantity")
+        return ()
+        
 @admin.register(Order)
-class Orderadmin(admin.ModelAdmin):
-    list_display = ('customer_name','status', 'phone','total_amount','created_at')
-    list_filter=('customer_name','status', 'phone','total_amount','created_at')
-
-@admin.register(OrderItem)
-class OrderItemadmin(admin.ModelAdmin):
-    list_display = ('order', 'item_name','price','quantity')
-    list_filter=('order', 'item_name','price','quantity')
+class OrderAdmin(admin.ModelAdmin):
+    list_display = ("id", "customer_name", "phone", "total_amount", "status", "created_at")
+    list_filter=('id','customer_name','status', 'phone','total_amount','created_at')
+    inlines = [OrderItemInline]

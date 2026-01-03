@@ -32,3 +32,6 @@ class OrderItem(models.Model):
 
     def get_total(self):
         return self.price * self.quantity
+
+    def __str__(self):
+        return f"Order #{self.id} - {self.order.customer_name}"

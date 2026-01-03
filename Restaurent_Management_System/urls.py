@@ -17,8 +17,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path , include
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('menu.urls')),
     path('', include('orders.urls')),
 ]
+
+admin.site.site_title = "Admin Panel"
+admin.site.site_header = "Restaurent Management System"
+admin.site.index_title = "Welcome to My Restaurent Management System Portal"
