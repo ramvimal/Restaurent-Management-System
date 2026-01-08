@@ -1,0 +1,35 @@
+{% extends "main/home.html" %}
+{% load static %}
+{% block title %} <title>Login</title> {% endblock title %}
+
+{% block style %}
+    <link rel="stylesheet" href="{% static 'cashier/login.css' %}">
+{% endblock style %}
+
+{% block content %}
+<div class="main_container">
+    <div class="login-container">
+        <form class="login-form" method="POST">
+            {% csrf_token %}
+            <h2>Welcome Back</h2>
+            <p>Please enter your details to login.</p>
+            
+            <div class="input-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" placeholder="Enter your username" required>
+            </div>
+            
+            <div class="input-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Enter your password" required>
+            </div>
+            
+            <button type="submit" class="login-btn">Login</button>
+            
+            <div class="form-footer">
+                <a href="#">Forgot password?</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock content %}
