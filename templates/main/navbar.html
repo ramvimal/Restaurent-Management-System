@@ -23,10 +23,20 @@
         </div>
 
         <div class="nav-actions">
-            <a href="/admin" class="admin-link">
+            {% if request.path != '/dashboard/' and request.path != '/login/' %}
+            <a href="/dashboard" class="admin-link">
                 <span class="settings-icon">⚙</span>
                 <span>Admin</span>
             </a>
+            {% elif request.path == '/login/' %}
+            <a href="/" class="admin-link">
+                <span>Go Back</span>
+            </a>
+            {% else %}
+            <a href="/logout" class="admin-link">
+                <span>Logout</span>
+            </a>
+            {% endif %}
             {% if request.path != '/checkout/' or request.path != '/bill/' %}
                 <button class="cart-btn" id="cartBtn">
                     <span class="cart-icon">🛒</span>
