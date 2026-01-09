@@ -86,3 +86,18 @@ p {
 .form-footer a:hover {
     text-decoration: underline;
 }
+
+.error_message{
+    display: flex;
+    justify-content: center;
+}
+
+.error_message p{
+    display: inline-block;
+    border: 2px solid red;
+    margin: 2px;
+    padding: 3px;
+    font-size: 19px;
+    color: red;
+    font-weight: bold;
+}

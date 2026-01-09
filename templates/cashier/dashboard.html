@@ -17,22 +17,31 @@
             <div class="stat-card">
                 <i class="fas fa-file-alt icon-orange"></i>
                 <div class="stat-info">
-                    <span class="stat-label">Pending Orders</span>
-                    <span class="stat-value">18</span>
+                    <span>🗒️</span>
+                    <div class="ldl-val">
+                        <span class="stat-label">Pending Orders</span>
+                        <span class="stat-value">{{panding_orders}}</span>
+                    </div>
                 </div>
             </div>
             <div class="stat-card">
                 <i class="fas fa-chart-line icon-green"></i>
                 <div class="stat-info">
-                    <span class="stat-label">Total Revenue</span>
-                    <span class="stat-value">$7788.00</span>
+                    <span>🗒️</span>
+                    <div>
+                        <span class="stat-label">Total Revenue</span>
+                        <span class="stat-value">$7788.00</span>
+                    </div>
                 </div>
             </div>
             <div class="stat-card">
                 <i class="fas fa-utensils icon-brown"></i>
                 <div class="stat-info">
-                    <span class="stat-label">Menu Items</span>
-                    <span id="menu-count" class="stat-value">190</span>
+                    <span>🗒️</span>
+                    <div>
+                        <span class="stat-label">Menu Items</span>
+                        <span id="menu-count" class="stat-value">{{total_menu}}</span>
+                    </div>
                 </div>
             </div>
         </section>
@@ -97,11 +106,7 @@
             </form>
         </div>
     </div>
-
 {% endblock content %}
-
 {% block script %}
-
-<script src="/static/cashier/cashier_dashboard.js"></script>
-
+    <script src="static\cashier\cashier_dashboard.js"></script>
 {% endblock script %}
