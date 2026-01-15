@@ -48,20 +48,33 @@
 
     <div class="filter-bar">
         <button onclick="filterOrders('ALL')" class="active">All</button>
-        <button onclick="filterOrders('PAID')">Paid</button>
         <button onclick="filterOrders('PENDING')">Pending</button>
+        <button onclick="filterOrders('CONFIRMED')">Confirmed</button>
+        <button onclick="filterOrders('PREPARING')">Preparing</button>
+        <button onclick="filterOrders('READY')">Ready</button>
+        <button onclick="filterOrders('DELIVERED')">Delivered</button>
+        <button onclick="filterOrders('CANCELLED')">Cancelled</button>
     </div>
+
     
     <div class="order-list" id="orderList">
         {% for order in orders %}
             <div class="order-card" data-status="{{ order.status }}">
                 <div class="order-left">
-                    <div style="display: flex;">
+                    <div class="status" style="display: flex;">
                         <p>{{ order.customer_name }}</p>
-                        {% if order.status == "PAID" %}
-                        <span class="status paid" style="margin-left:5px;">PAID</span>
-                        {% else %}
-                        <span class="status pending" style="margin-left:5px;">PENDING</span>
+                        {% if order.status == "DELIVERED" %}
+                        <span class="delivered">Delivered</span>
+                        {% elif order.status == "CANCELLED" %}
+                        <span class="cancelled stat">Cancelled</span>
+                        {% elif order.status == "PENDING" %}
+                        <span class="pending stat">Pending</span>
+                        {% elif order.status == "CONFIRMED" %}
+                        <span class="confirmed stat">Confirmed</span>
+                        {% elif order.status == "PREPARING" %}
+                        <span class="preparing stat">Preparing</span>
+                        {% elif order.status == "READY" %}
+                        <span class="ready stat">Ready</span>
                         {% endif %}
                     </div>
                     <span class="time"><b>📅 </b>{{ order.created_at|date:"M-d" }}, {{ order.created_at|date:"h:i" }}</span>
@@ -75,19 +88,30 @@
                 <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
 
                 <div class="order-right">
-                    <select onchange="updateStatus(this, {{ order.id }})"
-                        {% if order.is_status_locked %} disabled {% endif %}>
-                        <option value="SELECT STATUS" selected>
-                            Select Status
-                        </option>
+                    <select onchange="updateStatus(this, {{ order.id }})" data-prev="{{ order.status }}">
+
                         <option value="PENDING" {% if order.status == "PENDING" %}selected{% endif %}>
                             Pending
                         </option>
-                        <option value="PAID" {% if order.status == "PAID" %}selected{% endif %}>
-                            Paid
+
+                        <option value="CONFIRMED" {% if order.status == "CONFIRMED" %}selected{% endif %}>
+                            Confirmed
                         </option>
-                        <option value="FAILED" {% if order.status == "FAILED" %}selected{% endif %}>
-                            Failed
+
+                        <option value="PREPARING" {% if order.status == "PREPARING" %}selected{% endif %}>
+                            Preparing
+                        </option>
+
+                        <option value="READY" {% if order.status == "READY" %}selected{% endif %}>
+                            Ready
+                        </option>
+
+                        <option value="DELIVERED" {% if order.status == "DELIVERED" %}selected{% endif %}>
+                            Delivered
+                        </option>
+
+                        <option value="CANCELLED" {% if order.status == "CANCELLED" %}selected{% endif %}>
+                            Cancelled
                         </option>
                     </select>
                 </div>
@@ -102,7 +126,7 @@
 
 {% block script %}
 <script src="{% static 'cashier/cashier_dashboard.js' %}"></script>
-{% endblock %}{{ order.created_at|date:"H:i" }}
+{% endblock %}
 
 {% comment %} {% extends "main/home.html" %}
 {% load static %}

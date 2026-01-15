@@ -123,6 +123,7 @@
 .order-left p{
     font-weight: bold;
     margin: 5px 0;
+    font-size: 18px;
 }
 .order-left span{
     margin-bottom: 2px;
@@ -147,24 +148,70 @@
     display: block;
     font-size: 12px;
     color: gray;
+    padding-left: 5px;
 }
 
 .status {
     display: inline-block;
-    padding: 5px 10px;
+    padding: 0px 10px;
     border-radius: 12px;
     font-size: 12px;
     margin-bottom: 6px;
+    /* border: 2px solid red; */
 }
 
-.status.paid {
-    background: #e6ffef;
-    color: green;
+.pending { 
+    align-content: center;
+    margin-left:5px;
+    border-radius: 8px;
+    padding: 2px 10px;
+    font-weight: bold;
+    background: orange;
 }
 
-.status.pending {
-    background: #fff3cd;
-    color: orange;
+.confirmed { 
+    align-content: center;
+    margin-left:5px;
+    border-radius: 8px;
+    padding: 2px 10px;
+    font-weight: bold;
+    background: blue; 
+}
+
+.preparing { 
+    align-content: center;
+    margin-left:5px;
+    border-radius: 5px;
+    padding: 2px 10px;
+    font-weight: bold;
+    background: purple; 
+}
+
+.ready { 
+    align-content: center;
+    margin-left:5px;
+    border-radius: 5px;
+    padding: 2px 10px;
+    font-weight: bold;
+    background: teal; 
+}
+
+.delivered { 
+    align-content: center;
+    margin-left:5px;
+    border-radius: 5px;
+    padding: 2px 10px;
+    font-weight: bold;
+    background: green; 
+}
+
+.cancelled { 
+    align-content: center;
+    margin-left:5px;
+    border-radius: 5px;
+    padding: 2px 10px;
+    font-weight: bold;
+    background: red; 
 }
 
 .order-right {

@@ -265,12 +265,12 @@ def bill_pdf(request, order_id):
     for item in order.items.all():
         p.drawString(50, y, item.item_name)
         # Assuming item has a 'price' field
-        p.drawCentredString(center + 20, y, f"₹{item.price}") 
+        p.drawCentredString(center + 20, y, f"{item.price}") 
         p.drawCentredString(center + 80, y, f"{item.quantity:02d}")
         
         item_total = item.get_total()
         subtotal += item_total
-        p.drawRightString(width - 50, y, f"₹{item_total}")
+        p.drawRightString(width - 50, y, f"{item_total}")
         y -= 20
 
     # --- Totals Section ---
@@ -279,7 +279,7 @@ def bill_pdf(request, order_id):
     
     # Final Total
     p.setFont("Helvetica-Bold", 12)
-    p.drawRightString(width - 50, y, f"Total: ₹{order.total_amount}")
+    p.drawRightString(width - 50, y, f"Total: {order.total_amount}")
     y -= 40
 
     # --- Footer (Thermal Receipt Style) ---

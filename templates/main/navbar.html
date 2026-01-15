@@ -23,8 +23,8 @@
         </div>
 
         <div class="nav-actions">
-            {% if request.path != '/cashier/' and request.path != '/login/' %}
-            <a href="/cashier" class="admin-link">
+            {% if request.path == '/' and request.path != '/login/' %}
+            <a href="cashier/dashboard" class="admin-link">
                 <span class="settings-icon">⚙</span>
                 <span>Admin</span>
             </a>
@@ -32,11 +32,12 @@
             <a href="/" class="admin-link">
                 <span>Go Back</span>
             </a>
-            {% else %}
+            {% elif request.path == "/cashier/dashboard" %}
             <a href="/logout" class="admin-link">
                 <span>Logout</span>
             </a>
             {% endif %}
+
             {% if request.path != '/checkout/' or request.path != '/bill/' %}
                 <button class="cart-btn" id="cartBtn">
                     <span class="cart-icon">🛒</span>

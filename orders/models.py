@@ -13,30 +13,21 @@ class Order(models.Model):
     address = models.TextField(default="no")
 
     status_choices = [
-        ('SELECT STATUS','Select Status'),
         ('PENDING', 'Pending'),
-        ('PAID', 'Paid'),
-        ('FAILED', 'Failed'),
+        ('CONFIRMED', 'Confirmed'),
+        ('PREPARING', 'Preparing'),
+        ('READY', 'Ready'),
+        ('DELIVERED', 'Delivered'),
+        ('CANCELLED','Cancelled'),
     ]
 
     status = models.CharField(
-        max_length=13,
+        max_length=20,
         choices=status_choices,
-        default='SELECT STATUS'
+        default='PENDING'
     )
 
-    status_updated_at = models.DateTimeField(auto_now=True)
     paid_at = models.DateTimeField(null=True, blank=True)
-
-    @property
-    def is_status_locked(self):
-        if self.status != "PAID" or not self.paid_at:
-            return False
-        return timezone.now() > self.paid_at + timezone.timedelta(seconds=10)
-    
-
-    
-
 
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, related_name='items', on_delete=models.CASCADE)

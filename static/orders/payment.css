@@ -94,9 +94,11 @@
 
 label {
     display: block;
-    margin-bottom: 8px;
+    margin-bottom: 3px;
     font-size: 14px;
     color: #666;
+    font-weight: bold;
+    text-align: left;
 }
 
 input {
