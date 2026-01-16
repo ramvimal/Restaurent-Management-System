@@ -4,7 +4,7 @@ from django.utils import timezone
 from orders.models import Order 
 from menu.models import MenuItem
 from django.http import JsonResponse
-from django.views.decorators.http import require_POST 
+from django.views.decorators.http import require_POST , require_GET
 from django.contrib.auth.decorators import login_required, user_passes_test
 
 
@@ -34,13 +34,16 @@ def is_cashier(user):
 def cashier_dashboard(request):
     
     orders = Order.objects.exclude(status="FAILED").order_by("-created_at")
-    pending_orders = Order.objects.filter(status="PENDING").count()
     return render(request,"cashier/dashboard.html",
     {
         "orders":orders,
-        "pending_orders":pending_orders,
     })
 
+@login_required
+@require_GET
+def pending_orders_count(request):
+    count = Order.objects.filter(status="PENDING").count()
+    return JsonResponse({"pending_orders": count})
 
 
 @login_required
@@ -49,12 +52,12 @@ def cashier_logout(request):
     return redirect("cashier_login")
 
 
-def mark_order_completed(request, order_id):
-    order = Order.objects.get(id=order_id)
-    order.status = "COMPLETED"
-    order.save()
+    # def mark_order_completed(request, order_id):
+    #     order = Order.objects.get(id=order_id)
+    #     order.status = "COMPLETED"
+    #     order.save()
 
-    return JsonResponse({"success": True})
+    #     return JsonResponse({"success": True})
 
 
 

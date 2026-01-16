@@ -18,7 +18,6 @@ urlpatterns = [
     # ---------------- PAYMENT ----------------
     path("payment/<int:order_id>/", views.payment_page, name="payment_page"),
     path("payment/success/<int:order_id>/", views.payment_success, name="payment_success"),
-    path("payment/fail/<int:order_id>/", views.payment_fail, name="payment_fail"),
 
     # ---------------- ORDER ----------------
     path("order-confirmed/<int:order_id>/", views.order_confirmed, name="order_confirmed"),

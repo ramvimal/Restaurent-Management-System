@@ -73,6 +73,22 @@
         });
     }
 
+    function refreshPendingCount() {
+        fetch("/cashier/pending-count/")
+            .then(res => res.json())
+            .then(data => {
+                const el = document.getElementById("pending-count");
+                if (el) {
+                    el.innerText = data.pending_orders;
+                    console.log(el)
+                }
+            })
+            .catch(() => {
+                console.warn("Pending count update failed");
+            });
+    }
+    
+    // setInterval(refreshPendingCount, 5000);
 
     function updateStatus(select, orderId) {
 
@@ -104,6 +120,7 @@
 
             // ✅ update badge
             updateStatusBadge(card, data.status);
+            refreshPendingCount();
         })
         .catch(() => {
             alert("Server error");

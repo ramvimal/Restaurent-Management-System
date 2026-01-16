@@ -108,9 +108,9 @@ def checkout_confirm(request):
     active_order_id = request.session.get("active_order_id")
     if active_order_id:
         order = Order.objects.filter(id=active_order_id).first()
-        if order and order.status == "PAID":
+        if order and order.status in ["DELIVERED", "CANCELLED"]:
             request.session.pop("active_order_id", None)
-        elif order and order.status == "PENDING":
+        elif order:
             return JsonResponse({"order_id": order.id})
 
     if request.method != "POST":
@@ -119,8 +119,6 @@ def checkout_confirm(request):
     cart = request.session.get("cart")
     if not cart:
         return JsonResponse({"error": "Cart empty"}, status=400)
-
-
 
     data = json.loads(request.body)
 
@@ -157,20 +155,20 @@ def payment_page(request, order_id):
     order = Order.objects.get(id=order_id) 
       
     if order.status != "PENDING":
-        return redirect("order_bill", order_id=order.id)
+        return redirect("order_confirmed", order_id=order.id)
+
 
     return render(request, "orders/payment.html", {"order": order})
-
 
 
 @csrf_exempt
 def payment_success(request, order_id):
     order = get_object_or_404(Order, id=order_id)
 
-    if order.status == "PAID":
-        return JsonResponse({"message": "Already paid"})
+    if order.status != "PENDING":
+        return JsonResponse({"message": "Order already confirmed"})
 
-    order.status = "PAID"
+    order.status = "CONFIRMED"
     order.save()
 
     request.session.pop("active_order_id", None)
@@ -180,30 +178,22 @@ def payment_success(request, order_id):
     return JsonResponse({"success": True})
 
 
-
-
-def payment_fail(request, order_id):
-    order = get_object_or_404(Order, id=order_id)
-    order.status = "FAILED"
-    order.save()
-
-    return render(request, "orders/payment_failed.html", {"order": order})
-
 # -------------------- ORDER CONFIRMATION & BILL --------------------
 
 def order_confirmed(request, order_id):
     order = get_object_or_404(Order, id=order_id)
 
-    if order.status != "PAID":
+    if order.status not in ["CONFIRMED", "PREPARING", "READY", "DELIVERED"]:
         return redirect(f"/payment/{order.id}/")
+
 
     return render(request, "orders/order_confirmed.html", {"order": order})
 
 def bill_view(request, order_id):
     order = get_object_or_404(Order, id=order_id)
 
-    if order.status != "PAID":
-        return redirect(f"/payment/{order.id}/")
+    if order.status != "DELIVERED":
+            return redirect("/cashier/dashboard/")
 
     return render(request, "orders/bill.html", {"order": order})
 
