@@ -57,6 +57,26 @@ def cashier_logout(request):
     return redirect("cashier_login")
 
 
+@login_required
+@user_passes_test(is_cashier)
+def cashier_order_detail(request, order_id):
+    order = get_object_or_404(Order, id=order_id)
+
+    return JsonResponse({
+        "id": order.id,
+        "customer_name": order.customer_name,
+        "status": order.status,
+        "total_amount": order.total_amount,
+        "items": [
+            {
+                "name": item.item_name,
+                "qty": item.quantity,
+                "price": item.price
+            }
+            for item in order.items.all()
+        ]
+    })
+
     # def mark_order_completed(request, order_id):
     #     order = Order.objects.get(id=order_id)
     #     order.status = "COMPLETED"

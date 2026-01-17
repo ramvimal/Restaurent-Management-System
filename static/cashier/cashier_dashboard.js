@@ -99,3 +99,50 @@ function getCSRFToken() {
         .querySelector('meta[name="csrf-token"]')
         .getAttribute("content");
 }
+
+
+function openOrderPopup(orderId) {
+    document.getElementById("orderModal").classList.remove("hidden");
+
+    fetch(`/cashier/order/${orderId}/`)
+        .then(res => {
+            if (!res.ok) throw new Error("Not JSON");
+            return res.json();
+        })
+        .then(data => {
+            // ... inside your .then(data => { ...
+            document.getElementById("modalBody").innerHTML = `
+                <span class="section-label">Customer Information</span>
+                <p class="info-text" style="color:#333; font-weight:500;">${data.customer_name}</p>
+                <p class="info-text">📞 ${data.phone || '9287455745'}</p>
+                <p class="info-text">📍 ${data.address || 'rajkot gujarat india'}</p>
+                
+                <hr>
+                
+                <span class="section-label">Order Items</span>
+                ${data.items.map(i => `
+                    <div class="order-item">
+                        <span>${i.qty}x ${i.name}</span>
+                        <span>₹${i.price}</span>
+                    </div>
+                `).join("")}
+                
+                <hr>
+                
+                <div class="total-row">
+                    <span>Total</span>
+                    <span class="total-amount">₹${data.total_amount}</span>
+                </div>
+            `;
+        })
+        .catch(err => {
+            alert("Please login as cashier");
+            console.error(err);
+        });
+
+}
+
+function closeModal() {
+    document.getElementById("orderModal").classList.add("hidden");
+}
+
