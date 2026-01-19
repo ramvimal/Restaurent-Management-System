@@ -23,6 +23,7 @@ urlpatterns = [
     path('', include('menu.urls')),
     path('', include('orders.urls')),
     path('', include('cashier.urls')),
+    path("api/", include("api.urls")),
 ]
 
 admin.site.site_title = "Admin Panel"

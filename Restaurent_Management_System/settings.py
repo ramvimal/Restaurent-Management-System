@@ -44,6 +44,8 @@ INSTALLED_APPS = [
     'menu',
     'orders',
     'cashier',
+    'rest_framework',
+    'api',
 ]
 
 LOGIN_URL = "/login/"
