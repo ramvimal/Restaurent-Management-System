@@ -5,6 +5,7 @@ function filterOrders(status) {
     buttons.forEach(btn => btn.classList.remove("active"));
     event.target.classList.add("active");
 
+    console.log()
     cards.forEach(card => {
         if (status === "ALL") {
             card.style.display = "flex";
