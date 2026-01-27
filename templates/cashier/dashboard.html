@@ -26,6 +26,7 @@
                 </div>
             </div>
         </div>
+        
         <div class="stat-card">
             <div class="stat-info">
                 <span>🗒️</span>
@@ -144,32 +145,39 @@
         </div>  
         
     </div>
+    
     <div id="menuSection" class="hidden">
-        <div class="menu-grid">
-            {% for item in all_menu_items %}
-                <div class="menu-item-card {% if not item.available %}sold-out{% endif %}">
-                    
-                    <img src="\{{ item.img_url }}" class="menu-img"/>
-        
-                    <div class="menu-info">
-                        <h4>{{ item.name }}</h4>
-                        <p class="price">₹{{ item.price }}</p>
-                        
-                        <div class="availability">
-                            <label class="toggle-switch">
-                                <input type="checkbox"
+
+        {% for block in category_menu %}
+            <h3 class="category-title">{{ block.category.name }}</h3>
+
+            <div class="menu-grid">
+                {% for item in block.items %}
+                    <div class="menu-item-card {% if not item.available %}sold-out{% endif %}">
+
+                        <img src="\{{ item.img_url }}" class="menu-img"/>
+
+                        <div class="menu-info">
+                            <h4>{{ item.name }}</h4>
+                            <p class="price">₹{{ item.price }}</p>
+
+                            <div class="availability">
+                                <label class="toggle-switch">
+                                    <input type="checkbox"
                                         {% if item.available %}checked{% endif %}
                                         onchange="toggleMenuItem({{ item.id }}, this)">
-                                <span class="slider"></span>
-                            </label>
-                            <span class="status-text">
-                                {% if item.available %}Available{% else %}Sold Out{% endif %}
-                            </span>
+                                    <span class="slider"></span>
+                                </label>
+                                <span class="status-text">
+                                    {% if item.available %}Available{% else %}Sold Out{% endif %}
+                                </span>
+                            </div>
                         </div>
+
                     </div>
-                </div>
-            {% endfor %}
-        </div>
+                {% endfor %}
+            </div>
+        {% endfor %}
     </div>
 </div>
 {% endblock %}

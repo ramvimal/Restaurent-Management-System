@@ -53,10 +53,8 @@
         <div id="menuCategories">
             {% for data in menu_data %}
                 <div class="category-section" data-category="{{ data.category.name }}">
-
                     <h2 class="category-name">{{ data.category.name }}</h2>
-                    
-                    <div class="menu-grid">
+                    <div class="menu-grid">        
                         {% for item in data.items %}
                             <div class="food-card">
                                 <div class="card-image">

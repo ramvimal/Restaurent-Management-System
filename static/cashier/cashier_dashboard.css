@@ -88,7 +88,6 @@
     padding: 0 30px;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 18px;
-    margin-top: 80px;
     /* border:2px solid red; */
 }
 
@@ -135,6 +134,15 @@
     color: #ff6a00;
     font-weight: 600;
     margin: 4px 0;
+}
+
+.category-title {
+    margin: 20px 0 10px;
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+    border-left: 4px solid #ff9800;
+    padding-left: 10px;
 }
 
 /* ===== AVAILABILITY ===== */
@@ -203,7 +211,7 @@
     min-height: 35vh;
     position: relative;
     top: 67px;
-    /* border:2px solid red; */
+    margin-bottom: 80px;
 }
 
 .cashier-header {
@@ -295,7 +303,7 @@
     display: flex;
     align-items: center;
     /* border: 2px solid red; */
-    position: relative;
+    
 }
 
 .order-left{
@@ -405,7 +413,7 @@
     justify-content: center;
     gap: 10px;
     position: absolute;
-    right:20px;
+    right:40px;
     /* border: 2px solid red; */
 }
 

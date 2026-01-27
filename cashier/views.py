@@ -35,16 +35,24 @@ def cashier_dashboard(request):
     orders = Order.objects.exclude(status="FAILED").order_by("-created_at")
     menu_items_count = MenuItem.objects.count()
     total_orders = Order.objects.count()
-    menu_items = MenuItem.objects.all()
-    category = Category.objects.all()
+    categories = Category.objects.prefetch_related("menuitem_set")
+
+    category_menu = []
+    for category in categories:
+        items = MenuItem.objects.filter(category=category)
+        if items.exists():
+            category_menu.append({
+                "category": category,
+                "items": items
+            })
+    print(category_menu[1]["items"])
 
     return render(request,"cashier/dashboard.html",
     {
         "orders":orders,
         "menu_items":menu_items_count,
         "total_orders":total_orders,
-        "all_menu_items":menu_items,
-        "Category":category,
+        "category_menu": category_menu
     })
 
 
