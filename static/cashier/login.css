@@ -1,0 +1,102 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.login-container {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    /* The "Glass" effect */
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 0 20px rgb(0, 0, 0);
+    width: 100%;
+    max-width: 400px;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+}
+
+.login-form h2 {
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 8px;
+}
+
+.login-form p {
+    color: #777;
+    font-size: 0.9rem;
+    margin-bottom: 30px;
+}
+
+.input-group {
+    position: relative;
+    margin-bottom: 25px;
+}
+
+/* Premium Floating Label Effect */
+.input-group input {
+    width: 100%;
+    padding: 12px 0;
+    font-size: 1rem;
+    border: none;
+    border-bottom: 2px solid #ddd;
+    outline: none;
+    background: transparent;
+    transition: border-color 0.3s;
+}
+
+.input-group label {
+    position: absolute;
+    top: 12px;
+    left: 0;
+    color: #999;
+    pointer-events: none;
+    transition: 0.3s ease all;
+}
+
+.input-group input:focus~label,
+.input-group input:valid~label {
+    top: -12px;
+    font-size: 0.8rem;
+    color: #4a90e2;
+}
+
+.input-group input:focus {
+    border-bottom: 2px solid #4a90e2;
+}
+
+.login-btn {
+    width: 100%;
+    padding: 12px;
+    background: #333;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+}
+
+.login-btn:hover {
+    background: #000;
+    transform: translateY(-2px);
+}
+
+.form-footer {
+    margin-top: 25px;
+    text-align: center;
+    font-size: 0.85rem;
+}
+
+.form-footer a {
+    color: #4a90e2;
+    text-decoration: none;
+}
+
+.form-footer span {
+    display: block;
+    margin-top: 10px;
+    color: #666;
+}

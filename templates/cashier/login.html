@@ -3,38 +3,40 @@
 {% block title %} <title>Login</title> {% endblock title %}
 
 {% block style %}
-<link rel="stylesheet" href="{% static 'cashier/cashier_dashboard.css' %}?v=3.1">
+<link rel="stylesheet" href="{% static 'cashier/login.css' %}?v=1.0">
 {% endblock style %}
 
 {% block content %}
-<div class="main_container">
+<div class="container">
+
     <div class="login-container">
         <form class="login-form" method="POST">
             {% csrf_token %}
             <h2>Welcome Back</h2>
-            <p>Please enter your details to login.</p>
+            <p>Please enter your details to sign in.</p>
 
             <div class="input-group">
+                <input type="text" id="username" name="username" required>
                 <label for="username">Username</label>
-                <input type="text" id="username" name="username" placeholder="Enter your username" required>
             </div>
 
             <div class="input-group">
+                <input type="password" id="password" name="password" required>
                 <label for="password">Password</label>
-                <input type="password" id="password" name="password" placeholder="Enter your password" required>
             </div>
 
             {% if error %}
-            <div class="error_message">
-                <p>{{error}}</p>
+            <div class="error_message"
+                style="color: #e74c3c; background: #fff5f5; padding: 10px; border-radius: 5px; margin-bottom: 15px; font-size: 0.9rem; text-align: center;">
+                {{error}}
             </div>
             {% endif %}
 
-            <button type="submit" class="login-btn">Login</button>
-
+            <button type="submit" class="login-btn">Sign In</button>
             <div class="form-footer">
                 <a href="#">Forgot password?</a>
             </div>
+
         </form>
     </div>
 </div>

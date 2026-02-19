@@ -13,6 +13,9 @@ body {
     min-height: 105vh;
     padding: 20px;
     background-color: white;
+    position: relative;
+    top: 20px;
+    /* border: 2px solid red; */
     /* background: linear-gradient(135deg, #c4c4c4 0%, #646464 100%); */
 }
 
@@ -26,6 +29,7 @@ body {
     max-width: 900px;
     width: 100%;
     flex-wrap: wrap;
+    /* border: 2px solid red; */
 }
 
 /* --- Left Side: Order Summary --- */
@@ -88,6 +92,7 @@ body {
 /* --- Right Side: Payment Form & Visual --- */
 .payment-content {
     flex: 1.5;
+    /* border: 2px solid red; */
     padding: 30px;
     position: relative;
     min-width: 350px;
@@ -103,7 +108,7 @@ body {
 
 .credit-card {
     width: 330px;
-    height: 190px;
+    height: 170px;
     border-radius: 15px;
     background: linear-gradient(135deg, #1c1c1c, #3a3a3a);
     color: white;
