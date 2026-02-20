@@ -1,27 +1,30 @@
 from rest_framework import serializers
-from menu.models import MenuItem
+from menu.models import MenuItem , Category
 from orders.models import Order
 
 class MenuItemSerializer(serializers.ModelSerializer):
+
+    category = serializers.PrimaryKeyRelatedField(
+        queryset=Category.objects.all(),
+        write_only=True
+    )
+
+    category_name =  serializers.StringRelatedField(
+        source="category",
+        read_only=True
+    )
     class Meta:
         model = MenuItem
-        fields = [
-            "id",
-            "name",
-            "price",
-            "description",
-            "img_url",
-            "category"
-        ]
+        fields = "__all__"
+
 
 class OrdersSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order
-        fields = [
-            "id",
-            "customer_name",
-            "total_amount",
-            "phone",
-            "created_at",
-            "status"
-        ]
+        fields = "__all__"
+
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = "__all__"
+

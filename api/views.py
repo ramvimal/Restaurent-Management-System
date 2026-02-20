@@ -1,18 +1,21 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from menu.models import MenuItem
-from .serializers import MenuItemSerializer , OrdersSerializer
+from menu.models import MenuItem , Category
+from .serializers import MenuItemSerializer , OrdersSerializer , CategorySerializer
 from orders.models import Order
+from rest_framework import viewsets
 
 
-@api_view(["GET"])
-def menu_list_api(request):
-    items = MenuItem.objects.all()
-    serializer = MenuItemSerializer(items, many=True)
-    return Response(serializer.data)
 
-@api_view(["GET"])
-def order_list_api(request):
-    orders = Order.objects.filter(status="PENDING")
-    serializer = OrdersSerializer(orders, many=True)
-    return Response(serializer.data)
+class MenuItemsViewSet(viewsets.ModelViewSet):
+    serializer_class = MenuItemSerializer
+    queryset = MenuItem.objects.all()
+
+
+class OrdersViewSet(viewsets.ModelViewSet):
+    serializer_class = OrdersSerializer
+    queryset = Order.objects.all()
+
+class CategoryViewSet(viewsets.ModelViewSet):
+    serializer_class = CategorySerializer
+    queryset = Category.objects.all()
