@@ -11,7 +11,7 @@ class OrderAdmin(admin.ModelAdmin):
     list_display = ("id", "customer_name", "phone", "total_amount", "status", "created_at")
     list_filter=('id','customer_name','status', 'phone','total_amount','created_at')
     search_fields = ('id', 'customer_name')
-    search_help_text = "Searhch order id or name"
+    search_help_text = "Search order id or name"    
     inlines = [OrderItemInline]
    
     

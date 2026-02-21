@@ -13,6 +13,7 @@ class MenuItemSerializer(serializers.ModelSerializer):
         source="category",
         read_only=True
     )
+    
     class Meta:
         model = MenuItem
         fields = "__all__"

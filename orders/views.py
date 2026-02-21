@@ -28,10 +28,10 @@ def add_to_cart(request, item_id):
             'image': item.img_url
         }
 
-
     request.session['cart'] = cart
     request.session.modified = True
 
+    print(request.session.get(cart))
     # calculate totals
     total_items = sum(i['quantity'] for i in cart.values())
     total_price = sum(i['price'] * i['quantity'] for i in cart.values())
