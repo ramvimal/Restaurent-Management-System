@@ -1,0 +1,131 @@
+/* Layout Wrapper */
+.register-wrapper {
+    background: #f9f9f9; 
+    min-height: 60vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    position: relative;
+    top: 67px; /* To account for fixed navbar */
+    /* border: 2px solid red; */
+}
+
+/* The Card Container */
+.register-card {
+    background: #ffffff;
+    width: 100%;
+    max-width: 430px;
+    padding: 40px;
+    border-radius: 16px;
+    /* Soft shadow for premium feel */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04), 0 20px 60px rgba(0, 0, 0, 0.05);
+    border-top: 5px solid #f39c12; /* Brand Orange accent at the top */
+}
+
+.register-card h2 {
+    margin: 0;
+    font-size: 28px;
+    font-weight: 800;
+    color: #333; /* Matches the 'Shree Ram' text color */
+    text-align: center;
+}
+
+.subtitle {
+    text-align: center;
+    color: #7f8c8d; /* Muted grey for 'Fine Dining' style subtitle */
+    font-size: 14px;
+    margin-bottom: 30px;
+}
+
+/* Django Form Field Styling */
+.form-fields p {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-fields label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #444;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.form-fields input, 
+.form-fields select {
+    padding: 12px 16px;
+    border: 1.5px solid #b3aea3;
+    border-radius: 8px;
+    font-size: 15px;
+    background-color: #fcfcfc;
+    transition: all 0.3s ease;
+}
+
+/* Orange Focus State to match Navbar Login button */
+.form-fields input:focus {
+    outline: none;
+    border-color: #f39c12; 
+    background-color: #fff;
+    box-shadow: 0 0 0 4px rgba(243, 156, 18, 0.1);
+}
+
+/* Error and Help Text */
+.errorlist {
+    color: #e74c3c;
+    font-size: 13px;
+    padding: 0;
+    list-style: none;
+    margin-bottom: 10px;
+}
+
+.helptext {
+    font-size: 12px;
+    color: #95a5a6;
+    margin-top: 5px;
+}
+
+/* Primary Button - Matches the Orange Navbar Button */
+.btn-primary {
+    width: 100%;
+    background: #f39c12; /* Brand Orange */
+    color: white;
+    border: none;
+    padding: 14px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.btn-primary:hover {
+    background: #e67e22; /* Slightly darker orange on hover */
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(243, 156, 18, 0.3);
+}
+
+/* Footer Links */
+.login-footer {
+    text-align: center;
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+    font-size: 14px;
+    color: #666;
+}
+
+.login-footer a {
+    color: #f39c12; /* Brand Orange */
+    text-decoration: none;
+    font-weight: 700;
+}
+
+.login-footer a:hover {
+    text-decoration: underline;
+}

@@ -120,48 +120,55 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Payment Logic (Card)
-    paymentForm.addEventListener('submit', (e) => {
-        e.preventDefault();
+        paymentForm.addEventListener('submit', (e) => {
+            e.preventDefault();
 
-        // Hide Form
-        paymentForm.classList.add('hidden');
-        document.querySelector('.card-visual-container').classList.add('hidden');
-        document.querySelector('.payment-methods').classList.add('hidden'); // Hide toggle
+            // Hide Form
+            paymentForm.classList.add('hidden');
+            document.querySelector('.card-visual-container').classList.add('hidden');
+            document.querySelector('.payment-methods').classList.add('hidden'); // Hide toggle
 
-        // Show Processing
-        const processing = document.getElementById('processing');
-        processing.classList.remove('hidden');
+            // Show Processing
+            const processing = document.getElementById('processing');
+            processing.classList.remove('hidden');
 
-        // Simulate API delay
-        setTimeout(() => {
-            // Processing -> Success
-            processing.classList.add('hidden');
-            const success = document.getElementById('success');
-            success.classList.remove('hidden');
+            // Simulate API delay
+            setTimeout(() => {
+                // Processing -> Success
+                processing.classList.add('hidden');
+                const success = document.getElementById('success');
+                success.classList.remove('hidden');
 
-            // Trigger Backend Success URL
-            if (typeof ORDER_ID !== 'undefined') {
-                // Send payment_mode='CARD'
-                fetch(`/payment/success/${ORDER_ID}/?mode=CARD`)
-                    .then(res => res.json())
-                    .then(data => {
-                        console.log('Payment recorded:', data);
-                        setTimeout(() => {
+                // Trigger Backend Success URL
+                if (typeof ORDER_ID !== 'undefined') {
+
+                    fetch(`/payment/success/${ORDER_ID}/?mode=CARD`)
+                        .then(res => res.json())
+                        .then(data => {
+                            console.log('Payment recorded:', data);
+
+                            // 🔥 Clear cart AFTER success confirmed
+                            return fetch("/cart/clear/");
+                        })
+                        .then(res => res.json())
+                        .then(() => {
+                            // Redirect after cart cleared
                             window.location.href = `/order-confirmed/${ORDER_ID}/`;
-                        }, 2000);
-                    })
-                    .catch(err => {
-                        console.error('Error:', err);
-                        alert('Something went wrong. Redirecting to home...');
+                        })
+                        .catch(err => {
+                            console.error('Error:', err);
+                            alert('Something went wrong. Redirecting to home...');
+                            window.location.href = '/';
+                        });
+                } else {
+                    console.error("Order ID not found");
+                    setTimeout(() => {
                         window.location.href = '/';
-                    });
-            } else {
-                console.error("Order ID not found");
-                setTimeout(() => {
-                    window.location.href = '/';
-                }, 2000);
-            }
+                    }, 2000);
+                }
 
-        }, 2000);
-    });
+            }, 2000);
+
+        });
 });
+

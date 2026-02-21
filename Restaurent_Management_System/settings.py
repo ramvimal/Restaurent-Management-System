@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'accounts',
     'menu',
     'orders',
     'cashier',
@@ -55,7 +56,7 @@ DATABASES = {
     }
 }
 
-LOGIN_URL = "/login/"
+LOGIN_URL = "/login_cashier/"
 LOGIN_REDIRECT_URL = "/cashier/"
 LOGOUT_REDIRECT_URL = "/login/"
 

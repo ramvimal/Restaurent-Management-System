@@ -4,7 +4,8 @@ from .models import Category , MenuItem
 # Create your views here.
 def menu_list(request):
     categories = Category.objects.all()
-
+    print("Session Key:", request.session.session_key)
+    print("\n\nUser Authenticated:", request.user.is_authenticated)
     menu_data = []
     for category in categories:
         

@@ -23,8 +23,6 @@ class CategoryViewSet(viewsets.ModelViewSet):
 
 class cartApiView(APIView):
     def get(self,request):
-        print("Session key : ", request.session.session_key)
-        print("Session data : ", request.session.items())
         cart = request.session.get("cart",{})
         return Response(cart)
     

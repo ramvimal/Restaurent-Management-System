@@ -31,7 +31,6 @@ def add_to_cart(request, item_id):
     request.session['cart'] = cart
     request.session.modified = True
 
-    print(request.session.get(cart))
     # calculate totals
     total_items = sum(i['quantity'] for i in cart.values())
     total_price = sum(i['price'] * i['quantity'] for i in cart.values())
@@ -105,6 +104,8 @@ def clear_cart(request):
 def checkout_page(request):
     if not request.session.get("cart"):
         return redirect("/")
+    if not request.user.is_authenticated:
+        return redirect("login_user")
     return render(request, 'orders/checkout.html')
 
 
@@ -145,7 +146,6 @@ def checkout_confirm(request):
             quantity=item["quantity"]
         )
         total += item["price"] * item["quantity"]
-    print(item["price"])
     order.total_amount = total
     order.save()
 
@@ -169,6 +169,10 @@ def payment_page(request, order_id):
 
 @csrf_exempt
 def payment_success(request, order_id):
+    # Ensure this order is the one currently being processed in this session
+    if str(order_id) != str(request.session.get("active_order_id")):
+          return JsonResponse({"error": "Unauthorized order access"}, status=403)
+
     order = get_object_or_404(Order, id=order_id)
 
     if order.status != "PENDING":
@@ -187,7 +191,7 @@ def payment_success(request, order_id):
     request.session.pop("active_order_id", None)
     request.session["cart"] = {}
     request.session.modified = True
-
+    
     return JsonResponse({"success": True})
 
 

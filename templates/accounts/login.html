@@ -1,0 +1,48 @@
+{% extends "main/home.html" %}
+
+{% load static %}
+
+{% block title %} <title>Login</title> {% endblock title %}
+
+{% block style %}
+
+<link rel="stylesheet" href="{% static 'accounts/login_user.css' %}">
+
+{% endblock style %}
+
+{% block content %}
+<div class="main-container">
+    <div class="login-container">
+        <h2>Sign in</h2>
+        
+        {% if messages %}
+        {% for message in messages %}
+        <div class="message">{{ message }}</div>
+        {% endfor %}
+        {% endif %}
+        
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-row">
+                <label for="id_username">Username or Email</label>
+                <input type="text" name="username" id="id_username" required autofocus>
+            </div>
+            
+            <div class="form-row">
+                <label for="id_password">Password</label>
+                <input type="password" name="password" id="id_password" required>
+            </div>
+            
+            <div class="form-row">
+                <label><input type="checkbox" name="remember"> Remember me</label>
+            </div>
+            
+            <div class="actions">
+                <button type="submit">Sign in</button>
+            </div>
+        </form>
+        
+        <p class="small">Don't have an account? <a href="{% url 'register_user' %}">Register</a></p>
+    </div>
+</div>
+{% endblock content %}

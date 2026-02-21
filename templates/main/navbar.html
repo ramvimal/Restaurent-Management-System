@@ -24,20 +24,35 @@
         </div>
 
         <div class="nav-actions">
-            {% if request.path == '/' and request.path != '/login/' %}
-            <a href="cashier/dashboard" class="admin-link">
-                <span class="settings-icon">⚙</span>
-                <span>Admin</span>
-                
-            </a>
-            {% elif request.path == '/login/' %}
+            {% if request.path == '/login_cashier/' or request.path == '/login_user/' or request.path == '/Register_user/' %}
             <a href="/" class="admin-link">
                 <span>Go Back</span>
             </a>
             {% elif request.path == "/cashier/dashboard/" %}
-            <a href="/logout" class="logout">
+            <a href="{% url 'cashier_logout' %}" class="logout">
                 <span>Logout</span>
             </a>
+            {% endif %}
+
+            
+            {% if request.user.is_authenticated %}
+                {% if request.path != '/cashier/dashboard/' and request.path != '/login_cashier/' %}
+                    <a href="{% url 'logout_user' %}" class="logout">
+                        <span>Logout</span>
+                    </a>
+                {% endif %}
+            {% else %}
+
+                {% if request.path != '/cashier/dashboard/' and request.path != '/login_cashier/' and request.path != '/login_user/' %}
+                <a href="{% url 'login_user' %}" class="logout">
+                    <span>Login</span>
+                </a>
+                {% endif %}
+                {% if request.path != '/cashier/dashboard/' and request.path != '/login_cashier/' and request.path != '/Register_user/' %}
+                <a href="{% url 'register_user' %}" class="logout">
+                    <span>Register</span>
+                </a>
+                {% endif %}
             {% endif %}
         
             {% if request.path == "/" %}

@@ -151,9 +151,18 @@
                 address: address
             })
         })
-        .then(res => res.json())
+        .then(res => {
+            if (!res.ok) {
+                return res.json().then(err => { throw err; });
+            }
+            return res.json();
+        })
         .then(data => {
             window.location.href = `/payment/${data.order_id}/`;
+        })
+        .catch(err => {
+            console.error("Error:", err);
+            alert(err.error || "Something went wrong during checkout. Please try again.");
         });
     }
 document.addEventListener("DOMContentLoaded", renderCheckoutSummary);

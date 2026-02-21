@@ -31,7 +31,6 @@ def is_cashier(user):
 @login_required
 @user_passes_test(is_cashier)
 def cashier_dashboard(request):
-    
     orders = Order.objects.exclude(status="FAILED").order_by("-created_at")
     menu_items_count = MenuItem.objects.count()
     total_orders = Order.objects.count()

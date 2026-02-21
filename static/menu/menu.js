@@ -160,9 +160,3 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
-fetch("/cart/clear/")
-    .then(res => res.json())
-    .then(() => {
-        updateCartCount(0);
-});
-
