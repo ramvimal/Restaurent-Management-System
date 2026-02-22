@@ -15,7 +15,6 @@ def add_to_cart(request, item_id):
     item = MenuItem.objects.get(id=item_id)
     cart = request.session.get('cart', {})
 
-    #print(item_id)
     item_id = str(item_id)
 
     if item_id in cart:

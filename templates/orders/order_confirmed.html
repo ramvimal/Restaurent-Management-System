@@ -2,71 +2,147 @@
 {% load static %}
 
 {% block title %}
-<title>Order Confirmed</title>
+<title>Order Confirmed | Shree Ram Fine Dining</title>
 {% endblock %}
 
 {% block style %}
 <style>
-.container{
-    min-height:92vh;
-    display:flex;   
-    justify-content:center;
-    align-items:center;
-}
-.right_icon{
-    width:80px;
-    height:80px;
-    border-radius:50%;
-    background:#eaf7ef;
-    margin:0 auto 20px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-}
-.bill_btn{
-    padding: 10px 15px;
-    background-color:#26CCC2;
-    border-radius:10px;
-    color:blue;
-    font-weight:bold;
-    text-decoration:none;
-}
-.buttons{
-    margin-top:30px;
-    display: flex;
-    justify-content: space-around;
-}
-.buttons a{
+    .order-success-wrapper {
+        min-height: 90vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #f9f9f9;
+        font-family: 'Inter', sans-serif;
+        padding: 20px;
+    }
 
-}
+    .order-card {
+        background: #ffffff;
+        padding: 50px 40px;
+        border-radius: 20px;
+        text-align: center;
+        max-width: 550px;
+        width: 100%;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
+        border-top: 6px solid #f39c12; /* Brand Orange */
+    }
+
+    .success-icon-circle {
+        width: 90px;
+        height: 90px;
+        border-radius: 50%;
+        background: #fff9f0; /* Soft orange tint */
+        margin: 0 auto 25px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 2px solid #f39c12;
+    }
+
+    .success-icon-circle span {
+        font-size: 42px;
+        color: #f39c12;
+    }
+
+    .order-card h1 {
+        font-size: 32px;
+        font-weight: 800;
+        color: #1a1a1a;
+        margin-bottom: 10px;
+        letter-spacing: -0.5px;
+    }
+
+    .order-card p {
+        color: #666;
+        font-size: 16px;
+        line-height: 1.6;
+        margin-bottom: 35px;
+    }
+
+    .button-group {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+    }
+
+    .btn-premium {
+        padding: 14px 28px;
+        border-radius: 12px;
+        font-weight: 700;
+        text-decoration: none;
+        font-size: 15px;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        display: inline-block;
+        flex: 1;
+    }
+
+    /* Primary Brand Button */
+    .btn-view-bill {
+        background-color: #f39c12;
+        color: white;
+        border: 2px solid #f39c12;
+    }
+
+    .btn-view-bill:hover {
+        background-color: #e67e22;
+        border-color: #e67e22;
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(243, 156, 18, 0.25);
+    }
+
+    /* Secondary Button */
+    .btn-menu {
+        background-color: white;
+        color: #f39c12;
+        border: 2px solid #f39c12;
+    }
+
+    .btn-menu:hover {
+        background-color: #fff9f0;
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+    }
+
+    @media (max-width: 480px) {
+        .button-group {
+            flex-direction: column;
+        }
+    }
 </style>
 {% endblock style %}
 
 {% block content %}
-<div class="container" >
-    <div style="text-align:center;max-width:500px;">
+<div class="order-success-wrapper">
+    <div class="order-card">
         
-        <div class="right_icon" style="">
-            <span style="font-size:36px;color:#16a34a;">✔</span>
+        <div class="success-icon-circle">
+            <span>✔</span>
         </div>
 
         <h1>Order Confirmed!</h1>
-        <p style="margin:15px 0;color:#555;">
-            Thank you for your order. We'll start preparing it right away.<br>
-            You'll receive updates on your order status.
+        <p>
+            Thank you for dining with <strong>Shree Ram</strong>. <br>
+            Our chefs are already preparing your meal with care. <br>
+            We'll notify you when it's ready!
         </p>
 
-        <div class="buttons">
-            <a href="/bill/{{ order.id }}/" class="bill_btn">
+        <div class="button-group">
+            <a href="/bill/{{ order.id }}/" class="btn-premium btn-view-bill">
                 View Bill
             </a>
-            <a href="/" class="bill_btn">
+            <a href="/" class="btn-premium btn-menu">
                 Back To Menu
             </a>
         </div>
 
     </div>
 </div>
+{% endblock content %}
+
+{% block script %}
 <script>
     // Disable browser back button
     history.pushState(null, null, location.href);
