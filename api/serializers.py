@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from menu.models import MenuItem , Category
-from orders.models import Order
+from orders.models import Order , OrderItem
 
 class MenuItemSerializer(serializers.ModelSerializer):
 
@@ -29,3 +29,17 @@ class CategorySerializer(serializers.ModelSerializer):
         model = Category
         fields = "__all__"
 
+class CartSerializer(serializers.ModelSerializer):
+
+    customer_name = serializers.StringRelatedField(
+        source="order.customer_name",
+        read_only=True
+    )
+
+    order = serializers.PrimaryKeyRelatedField(
+        queryset=Order.objects.all(),
+        write_only=True
+    )
+    class Meta:
+        model = OrderItem
+        fields = "__all__"

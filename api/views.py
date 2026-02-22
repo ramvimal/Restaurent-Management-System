@@ -1,12 +1,8 @@
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
 from menu.models import MenuItem , Category
-from .serializers import MenuItemSerializer , OrdersSerializer , CategorySerializer
-from orders.models import Order
-from rest_framework import viewsets
-from rest_framework.views import APIView
-
-
+from .serializers import CartSerializer, MenuItemSerializer , OrdersSerializer , CategorySerializer
+from orders.models import Order , OrderItem
+from rest_framework import viewsets , status
+from rest_framework.response import Response
 
 class MenuItemsViewSet(viewsets.ModelViewSet):
     serializer_class = MenuItemSerializer
@@ -21,14 +17,14 @@ class CategoryViewSet(viewsets.ModelViewSet):
     serializer_class = CategorySerializer
     queryset = Category.objects.all()
 
-class cartApiView(APIView):
-    def get(self,request):
-        cart = request.session.get("cart",{})
-        return Response(cart)
-    
-    def post(self, request):
-        cart = request.session.get("cart", {})  
-        cart["1"] = 2   # example item
-        request.session["cart"] = cart
-        request.session.modified = True
-        return Response({"message": "cart updated"})
+class CartViewSet(viewsets.ModelViewSet):
+    serializer_class = CartSerializer
+    queryset = OrderItem.objects.all()
+
+    def get_queryset(self):
+        order_id = self.request.query_params.get('order_id')
+        print(order_id)
+        if order_id:
+            return OrderItem.objects.filter(order__id=order_id)
+        return OrderItem.objects.none()
+        
